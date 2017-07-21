@@ -53,7 +53,12 @@ int main(){
 		switch(choice){
 			case 1: peek();
 			        break;
-			case 2:
+			case 2: push();
+                                break;
+                        case 3: pop();
+                                break;
+                        case 4: exit;
+                                break;
 		
 	}
 }
