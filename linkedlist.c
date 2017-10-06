@@ -3,10 +3,10 @@
 
 typedef struct linked_list{
 	int data;
-	struct linked_list * next;
+	struct linked_list *next;
 }node;
 
-void print(node *q)
+void print(node *q)  
 {
 	node *ptr;
 	ptr=q;
@@ -18,30 +18,39 @@ void print(node *q)
 	}
 }
 
-void insbeg(node **q,no)
+void insbeg(node **q,int no)
 {
 	node *temp,*ptr;
 	temp=*q;
 	ptr=(node*)malloc(sizeof(node));
 	ptr->data=no;
 	if(temp==NULL)
-			ptr->next=NULL;
+		ptr->next=NULL;
 	else
-			ptr->next=temp;
+		ptr->next=temp;
 	*q=ptr;
-	printf("\nElements of linkedList after insertion \n");
-	printf(*q);
+	printf("\nELEMENTS OF LINKLIST AFTER INSERTION\n");
+	print(*q);
 }
 
-void insend(node **q, int no)
+void insend(node **q,int no)
 {
 	node *ptr,*temp;
 	ptr=(node*)malloc(sizeof(node));
 	ptr->data=no;
 	ptr->next=NULL;
 	temp=*q;
+	if(temp==NULL)
+		*q=ptr;
+	else
+	{
+		while(temp->next!=NULL)
+			temp=temp->next;
+		temp->next=ptr;
+	}
+	printf("\nELEMENTS OF LINKLIST AFTER INSERTION\n");
+	print(*q);
 }
-
 void insafter(node *q,int no)
 {
 	int loc,k;
@@ -49,12 +58,12 @@ void insafter(node *q,int no)
 	temp=q;
 	ptr=(node*)malloc(sizeof(node*));
 	ptr->data=no;
-	printf("ENTER LOCATION WHERE NO. IS TO BE INSERTED: ");
+	printf("ENTER LOCATION WHERE THE NO.IS TO BE INSERTED: ");
 	scanf("%d",&loc);
 	for(k=1;k<loc;k++)
 	{
 		if(temp==NULL)
-			printf("\nElements are less than provided loacation \n");
+			printf("\nELEMENTS ARE LESS THAN PROVIDED LOCATION\n");
 		else
 		{
 			old=temp;
@@ -63,11 +72,10 @@ void insafter(node *q,int no)
 	}
 	ptr->next=temp;
 	old->next=ptr;
-	printf("\n Elements of LInkLIst after insertion \n");
-	printf(q);
+	printf("\nELEMENTS OF LINKLIST AFTER INSERTION\n");
+	print(q);
 }
-
-void del(node **q,int no)	
+void del(node **q,int no)
 {
 	int f=0;
 	node *old,*temp;
@@ -80,7 +88,7 @@ void del(node **q,int no)
 			f=1;
 			if(temp==*q)
 				*q=temp->next;
-			else
+			else	
 				old->next=temp->next;
 			free(temp);
 			break;
@@ -93,73 +101,79 @@ void del(node **q,int no)
 	}
 	
 	if(f==0)
-		printf("\n The given no. is not found \n");
-		
-	printf("\n Elements of linked list after deletion \n");
-	print(*q);	
-}	
-
+		printf("\nTHE GIVEN NUMBER IS NOT FOUND\n");
+	
+	printf("\nELEMENTS OF LINKLIST AFTER DELETION\n");
+	print(*q);
+}
+void traverse(node *q)
+{
+	printf("\nTRAVERSING LINKLIST\n\n");
+	print(q);
+	printf("\n\nEND OF LINKLIST\n");
+}
 int main()
-{	
+{
 	node *start,*ptr,*temp;
 	int i,n,j,no,c;
-	printf("Enter No. of nodes: ");
+	printf("ENTER NUMBER OF NODES: ");
 	scanf("%d",&n);
-	printf("\n Enter node no. 1: ");
-	start(node*)malloc(sizeof(node));
+	printf("\nENTER NODE NUMBER 1: ");
+	start=(node*)malloc(sizeof(node));
 	scanf("%d",&start->data);
 	temp=start;
 	for(i=1;i<n;i++)
 	{
 		ptr=(node*)malloc(sizeof(node));
-		printf("\n Enter nod number %d: ",i+1);
+		printf("\nENTER NODE NUMBER %d: ",i+1);
 		scanf("%d",&ptr->data);
 		temp->next=ptr;
 		temp=ptr;
 	}
 	temp->next=NULL;
 	do{
-		printf("\nEnter your choice\n");
-		printf("\n1-INsertion\n3-Deletion\n3-TRaverse\n4-Exit\n");
+		printf("\nENTER YOUR CHOICE\n");
+		printf("\n1-INSERTION\n2-DELETION\n3-TRAVERSE\n4-Exit\n\n");
 		scanf("%d",&j);
 		switch(j)
 		{
 			case 1:
-					printf("\n Enter the number to be inserted: ");
-					scanf("%d"&no);
-					printf("\n Enter 1 to insert at the begining \n");
-					printf("\n Enter 2 to insert at the end \n");
-					printf("\n Enter 3 to insert at specified location \n");
-					scanf("%d"&c);
-					switch(c)
-					{
-						case 1:
-							insbeg(&start,no);
-							break;
-						case 2:
-							insend(&start,no);
-							break;
-						case 3:
-							insafter(start,no);
-							break;
-						default:
-							printf("\n Invalid Choice.");
-					}
-					break;
+				printf("\nENTER THE NUMBER TO BE INSERTED: ");
+				scanf("%d",&no);
+				printf("\nENTER 1 TO INSERT AT THE BEGINING\n");
+				printf("ENTER 2 TO INSERT AT THE END\n");
+				printf("ENTER 3 TO INSERT AT A SPECIFIED LOCATION\n");
+				scanf("%d",&c);
+				switch(c)
+				{
+					case 1:
+						insbeg(&start,no);
+						break;
+					case 2:
+						insend(&start,no);
+						break;
+					case 3:
+						insafter(start,no);
+						break;
+					default:
+						printf("\nInvalid Choice.");
+						break;
+				}
+				break;
 			case 2:
-					printf("\n Enter the no. to be deleted: ");
-					scanf("%d",&no);
-					del(&start,no);
-					break;
+				printf("\nENTER THE NUMBER TO BE DELETED: ");
+				scanf("%d",&no);
+				del(&start,no);
+				break;
 			case 3:
-					traverse(start);
-					break;
+				traverse(start);
+				break;
 			case 4:
-					exit(0)
+				exit(0);
 			default:
-					printf("\n Invalid Input");
-					break;
-			}		
-	
+				printf("\nInvalid Input.");
+				break;		
+			}
+		}while(1);	
 	return 0;
-}		
+}
